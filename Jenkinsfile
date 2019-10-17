@@ -11,7 +11,7 @@ pipeline {
         stage('Build docker image') {
             agent any
             steps {
-                sh "docker build -t ${IMAGE}\:${GIT_TAG_NAME} ."
+                sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
                 // sh "docker build -t ${params.IMAGE} ."
             }
         }
@@ -19,7 +19,7 @@ pipeline {
             agent any
             steps {
 				sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-                sh "docker push ${IMAGE}\:${GIT_TAG_NAME}"
+                sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
                 // sh "docker push ${params.IMAGE}"
             }
         }
