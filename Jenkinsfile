@@ -3,12 +3,14 @@ node {
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
 
-    stage('Build docker image') {
-        sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-    }
-    stage('Push docker image') {
-        sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-        sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+    if (GIT_TAG_NAME != null) {
+        stage('Build docker image') {
+            sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
+        }
+        stage('Push docker image') {
+            sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+            sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+        }
     }
 }
 // Test32
