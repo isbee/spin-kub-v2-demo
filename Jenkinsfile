@@ -24,7 +24,7 @@
 //
 // Test
 node {
-    git url: 'https://github.com/jenkinsci/git-tag-message-plugin'
+    git url: 'https://github.com/isbee/spinnaker-test'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
     print(env.GIT_TAG_NAME)
