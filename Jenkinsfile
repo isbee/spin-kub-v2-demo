@@ -1,7 +1,7 @@
 pipeline {
     agent none
     parameters {
-        string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.5', description: 'Spinnaker with Jenkins')
+        string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.6', description: 'Spinnaker with Jenkins')
     }
     stages {
         stage('Build docker image') {
