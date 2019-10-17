@@ -7,7 +7,7 @@ pipeline {
         stage('Build docker image') {
             agent any
             steps {
-                sh "docker build -t ${params.IMAGE}"
+                sh "docker build -t ${params.IMAGE} ."
             }
         }
         stage('Push docker image') {
