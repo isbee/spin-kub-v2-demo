@@ -3,7 +3,7 @@ node {
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
 
-    if (GIT_TAG_NAME != null) {
+    if (GIT_TAG_NAME) {
         stage('Build docker image') {
             sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
         }
@@ -13,7 +13,7 @@ node {
         }
     }
 }
-// Test32
+// Test33
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
