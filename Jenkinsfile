@@ -27,22 +27,13 @@ node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
-    print(env.GIT_TAG_NAME)
 
     stage('Build docker image') {
-        agent any
-        steps {
-            sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-            // sh "docker build -t ${params.IMAGE} ."
-        }
+        sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
     }
     stage('Push docker image') {
-        agent any
-        steps {
-			sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-            sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-            // sh "docker push ${params.IMAGE}"
-        }
+        sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+        sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
     }
 }
 
