@@ -11,7 +11,7 @@ node {
         sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
     }
 }
-// Test4
+// Test5
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
