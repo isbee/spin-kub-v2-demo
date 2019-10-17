@@ -27,6 +27,7 @@ node {
     git url: 'https://github.com/jenkinsci/git-tag-message-plugin'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
+    print(env.GIT_TAG_NAME)
 
     stage('Build docker image') {
         agent any
