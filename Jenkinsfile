@@ -21,7 +21,8 @@
 //         }
 //     }
 // }
-// 
+//
+# Test
 node {
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
