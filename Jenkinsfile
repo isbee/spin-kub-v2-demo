@@ -1,28 +1,3 @@
-// pipeline {
-//     agent none
-//     // parameters {
-//     //     string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.6', description: 'Spinnaker with Jenkins')
-//     // }
-//     stages {
-//         stage('Build docker image') {
-//             agent any
-//             steps {
-//                 sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-//                 // sh "docker build -t ${params.IMAGE} ."
-//             }
-//         }
-//         stage('Push docker image') {
-//             agent any
-//             steps {
-// 				sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-//                 sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-//                 // sh "docker push ${params.IMAGE}"
-//             }
-//         }
-//     }
-// }
-//
-// Test2
 node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
@@ -36,6 +11,7 @@ node {
         sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
     }
 }
+// Test
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
