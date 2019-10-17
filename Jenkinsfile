@@ -1,27 +1,44 @@
-pipeline {
-    agent none
-    // parameters {
-    //     string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.6', description: 'Spinnaker with Jenkins')
-    // }
-    node {
-        env.IMAGE = "isbee/spinnaker-test"
-        env.GIT_TAG_NAME = gitTagName()
-    }
-    stages {
-        stage('Build docker image') {
-            agent any
-            steps {
-                sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-                // sh "docker build -t ${params.IMAGE} ."
-            }
+// pipeline {
+//     agent none
+//     // parameters {
+//     //     string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.6', description: 'Spinnaker with Jenkins')
+//     // }
+//     stages {
+//         stage('Build docker image') {
+//             agent any
+//             steps {
+//                 sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
+//                 // sh "docker build -t ${params.IMAGE} ."
+//             }
+//         }
+//         stage('Push docker image') {
+//             agent any
+//             steps {
+// 				sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+//                 sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+//                 // sh "docker push ${params.IMAGE}"
+//             }
+//         }
+//     }
+// }
+// 
+node {
+    env.IMAGE = "isbee/spinnaker-test"
+    env.GIT_TAG_NAME = gitTagName()
+
+    stage('Build docker image') {
+        agent any
+        steps {
+            sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
+            // sh "docker build -t ${params.IMAGE} ."
         }
-        stage('Push docker image') {
-            agent any
-            steps {
-				sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-                sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-                // sh "docker push ${params.IMAGE}"
-            }
+    }
+    stage('Push docker image') {
+        agent any
+        steps {
+			sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+            sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+            // sh "docker push ${params.IMAGE}"
         }
     }
 }
