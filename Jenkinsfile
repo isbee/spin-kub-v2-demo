@@ -13,6 +13,7 @@ pipeline {
         stage('Push docker image') {
             agent any
             steps {
+				sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 sh "docker push ${params.IMAGE}"
             }
         }
