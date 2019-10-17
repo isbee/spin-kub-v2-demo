@@ -3,9 +3,9 @@ pipeline {
     // parameters {
     //     string(name: 'IMAGE', defaultValue: 'isbee/spinnaker-test:2.1.6', description: 'Spinnaker with Jenkins')
     // }
-    environment {
-        IMAGE = "isbee/spinnaker-test"
-        GIT_TAG_NAME = gitTagName()
+    node {
+        env.IMAGE = "isbee/spinnaker-test"
+        env.GIT_TAG_NAME = gitTagName()
     }
     stages {
         stage('Build docker image') {
