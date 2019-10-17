@@ -22,7 +22,7 @@
 //     }
 // }
 //
-// Test
+// Test2
 node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
