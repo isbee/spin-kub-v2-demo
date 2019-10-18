@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 sh "docker push ${IMAGE}:${gitTagName()}"
-                sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi \" $1 \":\" $2)}'"
+                sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi \" \$1 \":\" \$2)}'"
             }
         }
     }
