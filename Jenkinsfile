@@ -4,7 +4,7 @@ node {
     env.GIT_TAG_NAME = gitTagName()
 
     stage('Build docker image') {
-        if (GIT_TAG_NAME) {
+        if (GIT_TAG_NAME != null) {
             print GIT_TAG_NAME
             sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
         } else {
