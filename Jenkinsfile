@@ -3,7 +3,7 @@ node {
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
     GIT_TAG_NAME = null
-    if (GIT_TAG_NAME == null) {
+    if (env.GIT_TAG_NAME == null) {
         print "TAG IS NULL"
     }
     print env.GIT_TAG_NAME
