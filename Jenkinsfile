@@ -2,6 +2,9 @@ node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
+    if (GIT_TAG_NAME == null) {
+        print "TAG IS NULL"
+    }
     print env.GIT_TAG_NAME
     print GIT_TAG_NAME
 
