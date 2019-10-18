@@ -4,14 +4,13 @@ pipeline {
         IMAGE = "isbee/spinnaker-test"
     }
     stages {
-        // stage('Build docker image') {
-        //     agent any
-        //     when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
-        //     steps {
-        //         sh "docker build -t ${IMAGE}:${gitTagName()} ."
-        //         sh "docker images"
-        //     }
-        // }
+        stage('Build docker image') {
+            agent any
+            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
+            steps {
+                sh "docker build -t ${IMAGE}:${gitTagName()} ."
+            }
+        }
         stage('Push docker container') {
             agent any
             when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
