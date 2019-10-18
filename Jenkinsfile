@@ -2,7 +2,7 @@ node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
-    print GIT_TAG_NAME.getClass()
+    print GIT_TAG_NAME instanceof java.lang.String
     if (GIT_TAG_NAME == null) {
         print "TAG IS NULL"
     }
@@ -50,7 +50,7 @@ node {
     //     print "GIT_TAG_NAME is null"
     // }
 }
-// Test37
+// Test39
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
