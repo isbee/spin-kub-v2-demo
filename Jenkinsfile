@@ -21,6 +21,9 @@ node {
     if (GIT_TAG_NAME?.trim()) {
         print "TAG IS NOT NULL 3"
     }
+    if (GIT_TAG_NAME.equalsIgnoreCase("null")) {
+        print "yes"
+    }
     print env.GIT_TAG_NAME
     print GIT_TAG_NAME
 
