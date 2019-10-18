@@ -2,21 +2,21 @@ pipeline {
     agent none
     environment {
         IMAGE = "isbee/spinnaker-test"
-        GIT_TAG_NAME = gitTagName()
     }
     stages {
         stage('Build docker image') {
             agent any
-            when { expression { env.GIT_TAG_NAME && !env.GIT_TAG_NAME.equalsIgnoreCase("null") } }
+            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
             steps {
-                sh "docker pull ${params.IMAGE}"
+                sh "docker build -t ${IMAGE}:${gitTagName()} ."
             }
         }
         stage('Push docker container') {
             agent any
-            when { expression { env.GIT_TAG_NAME && !env.GIT_TAG_NAME.equalsIgnoreCase("null") } }
+            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
             steps {
-                sh "docker run -d --net=host --privileged=true --restart=always -v /home/pi:/home/docker/soundtaker-raspberrypi/config ${params.IMAGE}"
+                sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+                sh "docker push ${IMAGE}:${gitTagName()}"
             }
         }
     }
