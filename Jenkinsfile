@@ -1,35 +1,45 @@
-node {
-    git url: 'https://github.com/isbee/spin-kub-v2-demo'
-    env.IMAGE = "isbee/spinnaker-test"
-    env.GIT_TAG_NAME = gitTagName()
-
-    if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+pipeline {
+    agent none
+    environment {
+        IMAGE = "isbee/spinnaker-test"
+        GIT_TAG_NAME = gitTagName()
+    }
+    stages {
         stage('Build docker image') {
-            // if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
-                sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-            // }
+            agent any
+            when { expression { env.GIT_TAG_NAME && !env.GIT_TAG_NAME.equalsIgnoreCase("null") } }
+            steps {
+                sh "docker pull ${params.IMAGE}"
+            }
         }
-        stage('Push docker image') {
-            // if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
-                sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-                sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-            // }
+        stage('Push docker container') {
+            agent any
+            when { expression { env.GIT_TAG_NAME && !env.GIT_TAG_NAME.equalsIgnoreCase("null") } }
+            steps {
+                sh "docker run -d --net=host --privileged=true --restart=always -v /home/pi:/home/docker/soundtaker-raspberrypi/config ${params.IMAGE}"
+            }
         }
     }
-    // if (GIT_TAG_NAME) {
-    //     print GIT_TAG_NAME
-    //     stage('Build docker image') {
-    //         sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-    //     }
-    //     stage('Push docker image') {
-    //         sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-    //         sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-    //     }
-    // } else {
-    //     print "GIT_TAG_NAME is null"
-    // }
 }
-// Test40
+
+// node {
+//     git url: 'https://github.com/isbee/spin-kub-v2-demo'
+//     env.IMAGE = "isbee/spinnaker-test"
+//     env.GIT_TAG_NAME = gitTagName()
+
+//     stage('Build docker image') {
+//         if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+//             sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
+//         }
+//     }
+//     stage('Push docker image') {
+//         if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+//             sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+//             sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+//         }
+//     }
+// }
+// // Test40
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
