@@ -20,7 +20,7 @@ pipeline {
                 sh "docker images"
                 sh "docker rmi ${IMAGE}:0.0.5"
                 sh "docker images"
-                sh "docker rmi $(docker images -f \"dangling=true\" -q)"
+                sh "docker rmi \$(docker images -f \"dangling=true\" -q)"
                 sh "docker images"
                 // sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 // sh "docker push ${IMAGE}:${gitTagName()}"
