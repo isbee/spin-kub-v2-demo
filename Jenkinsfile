@@ -2,10 +2,11 @@ node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
+    print env.GIT_TAG_NAME
+    print GIT_TAG_NAME
 
     stage('Build docker image') {
-        if (GIT_TAG_NAME != null) {
-            print env.GIT_TAG_NAME
+        if (env.GIT_TAG_NAME != null) {
             sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
         } else {
             print "GIT_TAG_NAME is null"
@@ -30,7 +31,7 @@ node {
     //     print "GIT_TAG_NAME is null"
     // }
 }
-// Test35
+// Test36
 
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
