@@ -2,44 +2,20 @@ node {
     git url: 'https://github.com/isbee/spin-kub-v2-demo'
     env.IMAGE = "isbee/spinnaker-test"
     env.GIT_TAG_NAME = gitTagName()
-    print GIT_TAG_NAME instanceof java.lang.String
-    if (GIT_TAG_NAME == null) {
-        print "TAG IS NULL"
-    }
-    if (GIT_TAG_NAME != null) {
-        print "TAG IS NOT NULL"
-    }
-    if (GIT_TAG_NAME) {
-        print "TAG IS NOT NULL 2"
-    }
-    if (!GIT_TAG_NAME) {
-        print "TAG IS NULL 2"
-    }
-    if (!GIT_TAG_NAME?.trim()) {
-        print "TAG IS NULL 3"
-    }
-    if (GIT_TAG_NAME?.trim()) {
-        print "TAG IS NOT NULL 3"
-    }
-    if (GIT_TAG_NAME.equalsIgnoreCase("null")) {
-        print "yes"
-    }
-    print env.GIT_TAG_NAME
-    print GIT_TAG_NAME
 
-    stage('Build docker image') {
-        if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
-            sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
-        } else {
-            print "GIT_TAG_NAME is null"
+    if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+        stage('Build docker image') {
+            // if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+                sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
+            // }
+        }
+        stage('Push docker image') {
+            // if (GIT_TAG_NAME && !GIT_TAG_NAME.equalsIgnoreCase("null")) {
+                sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+                sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+            // }
         }
     }
-    // stage('Push docker image') {
-    //     if (GIT_TAG_NAME) {
-    //         sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-    //         sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-    //     }
-    // }
     // if (GIT_TAG_NAME) {
     //     print GIT_TAG_NAME
     //     stage('Build docker image') {
