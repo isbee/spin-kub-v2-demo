@@ -9,13 +9,7 @@ pipeline {
             when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
             steps {
                 sh "docker build -t ${IMAGE}:${gitTagName()} ."
-            }
-            steps {
-                // sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi \" \$1 \":\" \$2)}'"
-                // sh "docker images"
-                // sh "docker rmi -f ${IMAGE}:0.0.5"
-                // sh "docker images"
-                // sh "docker rmi -f \$(docker images -f \"dangling=true\" -q)"
+
                 sh "docker images"
                 sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 sh "docker image inspect ${IMAGE}:${gitTagName()} >/dev/null 2>&1 && echo yes || echo no"
