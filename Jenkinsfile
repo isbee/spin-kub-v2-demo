@@ -4,6 +4,7 @@ node {
     env.GIT_TAG_NAME = gitTagName()
 
     if (GIT_TAG_NAME) {
+        print GIT_TAG_NAME
         stage('Build docker image') {
             sh "docker build -t ${IMAGE}:${GIT_TAG_NAME} ."
         }
@@ -11,6 +12,8 @@ node {
             sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
             sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
         }
+    } else {
+        print "GIT_TAG_NAME is null"
     }
 }
 // Test34
