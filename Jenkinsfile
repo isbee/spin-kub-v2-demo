@@ -10,10 +10,6 @@ pipeline {
             steps {
                 sh "docker build -t ${IMAGE}:${gitTagName()} ."
             }
-        }
-        stage('Push docker container') {
-            agent any
-            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
             steps {
                 // sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi \" \$1 \":\" \$2)}'"
                 // sh "docker images"
@@ -28,6 +24,23 @@ pipeline {
                 sh "docker images"
             }
         }
+        // stage('Push docker container') {
+        //     agent any
+        //     when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
+        //     steps {
+        //         // sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi \" \$1 \":\" \$2)}'"
+        //         // sh "docker images"
+        //         // sh "docker rmi -f ${IMAGE}:0.0.5"
+        //         // sh "docker images"
+        //         // sh "docker rmi -f \$(docker images -f \"dangling=true\" -q)"
+        //         sh "docker images"
+        //         sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+        //         sh "docker image inspect ${IMAGE}:${gitTagName()} >/dev/null 2>&1 && echo yes || echo no"
+        //         sh "docker push ${IMAGE}:${gitTagName()}"
+        //         sh "docker images | grep ${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi -f \" \$1 \":\" \$2)}'"
+        //         sh "docker images"
+        //     }
+        // }
     }
 }
 
