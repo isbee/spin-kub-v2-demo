@@ -9,6 +9,7 @@ pipeline {
             when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
             steps {
                 sh "docker build -t ${IMAGE}:${gitTagName()} ."
+                sh "docker images"
             }
         }
         stage('Push docker container') {
@@ -17,6 +18,7 @@ pipeline {
             steps {
                 sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 sh "docker push ${IMAGE}:${gitTagName()}"
+                sh "docker rmi ${IMAGE}:${gitTagName()}"
             }
         }
     }
