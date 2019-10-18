@@ -11,12 +11,12 @@ node {
             print "GIT_TAG_NAME is null"
         }
     }
-    stage('Push docker image') {
-        if (GIT_TAG_NAME) {
-            sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
-            sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
-        }
-    }
+    // stage('Push docker image') {
+    //     if (GIT_TAG_NAME) {
+    //         sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
+    //         sh "docker push ${IMAGE}:${GIT_TAG_NAME}"
+    //     }
+    // }
     // if (GIT_TAG_NAME) {
     //     print GIT_TAG_NAME
     //     stage('Build docker image') {
