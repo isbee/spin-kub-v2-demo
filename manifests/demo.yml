@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: primary
-        image: index.docker.io/isbee/spinnaker-test
+        image: index.docker.io/isbee/spinnaker-test:0.0.43
         ports:
         - containerPort: 8000
         readinessProbe:
