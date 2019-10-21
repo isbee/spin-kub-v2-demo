@@ -6,19 +6,6 @@ pipeline {
         PROJECT = "deeply-listen"
     }
     stages {
-        stage('GCR authentication') {
-            agent any
-            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
-            steps {
-                // sh "export CLOUD_SDK_REPO=\"cloud-sdk-\$(lsb_release -c -s)\""
-                sh "echo \"deb http://packages.cloud.google.com/apt \"cloud-sdk-\$(lsb_release -c -s)\" main\" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
-                sh "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
-                sh "apt-get update && apt-get install -y google-cloud-sdk"
-                sh "gcloud init"
-
-                sh "gcloud auth configure-docker"
-            }
-        }
         stage('Build & Push docker image') {
             agent any
             when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
@@ -28,6 +15,11 @@ pipeline {
 
                 // sh "docker login -u \"isbee\" -p \"dltmdgus2!\" docker.io"
                 // sh "docker image inspect ${IMAGE}:${gitTagName()} >/dev/null 2>&1 && echo yes || echo no"
+                h "echo \"deb http://packages.cloud.google.com/apt \"cloud-sdk-\$(lsb_release -c -s)\" main\" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
+                sh "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+                sh "apt-get update && apt-get install -y google-cloud-sdk"
+                sh "gcloud init"
+
                 sh "gcloud auth configure-docker"
                 sh "docker push ${HOST}/${PROJECT}/${IMAGE}:${gitTagName()}"
                 sh "docker images | grep ${HOST}/${PROJECT}/${IMAGE}:${gitTagName()} | awk '{system(\"docker rmi -f \" \$1 \":\" \$2)}'"
