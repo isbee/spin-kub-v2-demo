@@ -1,7 +1,7 @@
 pipeline {
     agent none
     environment {
-        IMAGE = "spinnaker-test"
+        IMAGE = "spin-kub-v2-demo"
         HOST = "gcr.io"
         PROJECT = "deeply-listen"
     }
