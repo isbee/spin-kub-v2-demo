@@ -1,7 +1,7 @@
 pipeline {
     agent none
     environment {
-        IMAGE = "isbee/spinnaker-test"
+        IMAGE = "spinnaker-test"
         HOST = "gcr.io"
         PROJECT = "deeply-listen"
     }
@@ -16,7 +16,7 @@ pipeline {
                 sh "gcloud init"
 
                 sh "gcloud auth configure-docker"
-                
+
                 sh "docker build -t ${HOST}/${PROJECT}/${IMAGE}:${gitTagName()} ."
                 // sh "docker build -t ${IMAGE}:${gitTagName()} ."
 
