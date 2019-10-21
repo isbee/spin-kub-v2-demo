@@ -6,6 +6,19 @@ pipeline {
         PROJECT = "deeply-listen"
     }
     stages {
+        stage('GCR authentication') {
+            agent any
+            when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
+            steps {
+                sh "export CLOUD_SDK_REPO=\"cloud-sdk-\$(lsb_release -c -s)\""
+                sh "echo \"deb http://packages.cloud.google.com/apt \$CLOUD_SDK_REPO main\" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
+                sh "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -"
+                sh "sudo apt-get update && sudo apt-get install google-cloud-sdk"
+                sh "gcloud init"
+                
+                sh "gcloud auth configure-docker"
+            }
+        }
         stage('Build & Push docker image') {
             agent any
             when { expression { gitTagName() && !gitTagName().equalsIgnoreCase("null") } }
