@@ -32,7 +32,7 @@ spec:
       containers:
       - name: primary
         # image: index.docker.io/isbee/spinnaker-test:0.0.43
-        image: gcr.io/deeply-listen/spin-kub-v2-demo:0.0.64
+        image: gcr.io/deeply-listen/spin-kub-v2-demo:0.0.65
         ports:
         - containerPort: 8000
         readinessProbe:
